@@ -1,9 +1,10 @@
+
+const int analogInPin = 2;  // Analog input pin that the potentiometer is attached to
 void setup() {
-  // put your setup code here, to run once:
-
+  Serial.begin(9600);
 }
-
 void loop() {
-  // put your main code here, to run repeatedly:
-
+int sensorValue = analogRead(analogInPin);
+  Serial.println(sensorValue);
+  delay(200);
 }
