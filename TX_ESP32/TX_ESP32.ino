@@ -1,6 +1,7 @@
 
 /*
  * ESP32
+ * LC12S - 2.4GHZ Setting: NET ID->1234; NODE ID -> 0001; BAUDRATE->19200; Channel-> 100; PW 12dbm
  */
 #include "SerialDebug.h"
 #define DEBUG true
@@ -17,6 +18,7 @@ void setup(){
     SerialDebugger.begin(9600); //if this line is commented out, the binary sketch size will decrease by 332 bytes
   }
   SerialDebugger.enable(NOTIFICATION);
+  Serial2.begin(9600);
   //SerialDebugger.enable(ERROR);//uncomment if you want to debug ERRORs
 }
 
