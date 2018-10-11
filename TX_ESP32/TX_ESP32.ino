@@ -15,35 +15,35 @@ const char CH4 = 2;  // Read Internal Battery
 unsigned int payload[18]; // 1 byte start, 8 bytes of Channles, 8 bytes of functions, 1 byte stop
 unsigned char payload_leng;
 void setup(){
- if (DEBUG){
+ /*if (DEBUG){
     //SerialDebugger.begin(2,9600); //can select uart
     SerialDebugger.begin(9600); //if this line is commented out, the binary sketch size will decrease by 332 bytes
   }
-  SerialDebugger.enable(NOTIFICATION);
-  
+  SerialDebugger.enable(NOTIFICATION);*/
+  Serial.begin(9600);
   Serial2.begin(9600);
   //SerialDebugger.enable(ERROR);//uncomment if you want to debug ERRORs
 }
 
 void loop(){
  // Serial2.write('a');
-int VAL_CH0 = 4095-analogRead(CH0); payload[1] = VAL_CH0;
+unsigned int VAL_CH0 = 4095-analogRead(CH0); payload[1] = VAL_CH0;
 
-SerialDebugger.print("Throttle_CH0: ").println(VAL_CH0);
+//SerialDebugger.print("Throttle_CH0: ").println(VAL_CH0);
 
-int VAL_CH1 = analogRead(CH1);payload[2] = VAL_CH1;
-SerialDebugger.print("YAW_CH1: ").println(VAL_CH1);
+unsigned int VAL_CH1 = analogRead(CH1);payload[2] = VAL_CH1;
+//SerialDebugger.print("YAW_CH1: ").println(VAL_CH1);
 
-int VAL_CH2 = 4095-analogRead(CH2);payload[3] = VAL_CH2;
-SerialDebugger.print("DIR_FB_CH2: ").println(VAL_CH2);
+unsigned int VAL_CH2 = 4095-analogRead(CH2);payload[3] = VAL_CH2;
+//SerialDebugger.print("DIR_FB_CH2: ").println(VAL_CH2);
 
-int VAL_CH3 = 4095 - analogRead(CH3);payload[4] = VAL_CH3;
-SerialDebugger.print("DIR_LR_CH3: ").println(VAL_CH3);
+unsigned int VAL_CH3 = 4095 - analogRead(CH3);payload[4] = VAL_CH3;
+//SerialDebugger.print("DIR_LR_CH3: ").println(VAL_CH3);
 
 payload[0]= 0xFFFF;
 payload[18]= 0xEEEE;;
 
 for(int i=0; i<=18; i++){Serial2.write(payload[i]);Serial2.write(payload[i]>>8);} // Send payload to uart
-
+for(int i=0; i<=18; i++){Serial.write(payload[i]);Serial.write(payload[i]>>8);}
 delay(1000);
 }
