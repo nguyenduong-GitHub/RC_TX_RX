@@ -45,5 +45,5 @@ payload[18]= 0xEEEE;;
 
 for(int i=0; i<=18; i++){Serial2.write(payload[i]);Serial2.write(payload[i]>>8);} // Send payload to uart
 for(int i=0; i<=18; i++){Serial.write(payload[i]);Serial.write(payload[i]>>8);}
-delay(1000);
+delay(100);
 }
