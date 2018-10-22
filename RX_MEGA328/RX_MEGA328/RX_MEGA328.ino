@@ -205,8 +205,8 @@ void loop() // run over and over
          //  if(CH0_THR <500) {wheel_left('D'); }
          // if(CH2_FB >3000) {wheel_right('U');}
          // if(CH2_FB <500)  {wheel_right('D');}
-            if(CH2_FB <500){car_move_up();}
-            if(CH2_FB >3700){car_move_down();}
+            if(CH2_FB <500){car_move_down();}
+            if(CH2_FB >3700){car_move_up();}
             if(CH3_LR <500){car_turn_left();}
             if(CH3_LR >3700){car_turn_right();}
           //if((CH0_THR >500)&&(CH0_THR <3000)){wheel_left('P');}  
