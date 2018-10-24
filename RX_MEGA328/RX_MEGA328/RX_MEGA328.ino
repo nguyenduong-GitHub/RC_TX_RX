@@ -3,6 +3,9 @@
 #define  M_IN3 5
 #define  M_IN2 6
 #define  M_IN1 9
+#define  Front_LED 12
+#define  PWM_BAT 6
+#define  Vbat_Pin A0
 
 
 unsigned char rx_payload[36];
@@ -20,6 +23,12 @@ SoftwareSerial mySerial(10, 11); // RX, TX
 
 void setup()
 {
+  pinMode(Front_LED, OUTPUT);
+  digitalWrite(Front_LED, LOW);
+  pinMode(PWM_BAT, OUTPUT);
+  analogWrite(PWM_BAT, 255);
+
+
   pinMode(M_IN1, OUTPUT);
   pinMode(M_IN2, OUTPUT);
   pinMode(M_IN3, OUTPUT);
@@ -206,11 +215,12 @@ void loop() // run over and over
          // if(CH2_FB >3000) {wheel_right('U');}
          // if(CH2_FB <500)  {wheel_right('D');}
             if(CH2_FB <500){car_move_down();}
-            if(CH2_FB >3700){car_move_up();}
+            if(CH2_FB >3700){car_move_up();  digitalWrite(Front_LED, HIGH);}
             if(CH3_LR <500){car_turn_left();}
             if(CH3_LR >3700){car_turn_right();}
           //if((CH0_THR >500)&&(CH0_THR <3000)){wheel_left('P');}  
-          if((CH2_FB >500)&&(CH2_FB <3000) && (CH3_LR >500)&&(CH3_LR <3700)){car_stop();}
+          if((CH2_FB >500)&&(CH2_FB <3000) && (CH3_LR >500)&&(CH3_LR <3700)){car_stop();  digitalWrite(Front_LED, LOW);}
+          
              
      
      
