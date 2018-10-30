@@ -29,26 +29,40 @@ void setup(){
 }
 
 void loop(){
- // Serial2.write('a');
-/*
-unsigned int VAL_CH0 = 4095-analogRead(CH0); 
-if (VAL_CH0>4000){VAL_CH0 = 4000;}
-//Serial.print("Throttle_CH0: "); Serial.print(VAL_CH0);
-
-unsigned int VAL_CH1 = analogRead(CH1);
-
-unsigned int VAL_CH2 = 4095-analogRead(CH2);
-if (VAL_CH2>4000){VAL_CH2 = 4000;}
-unsigned int VAL_CH3 = 4095 - analogRead(CH3);
-
+unsigned int VAL_CH2  = 2000;
+unsigned int VAL_CH3  = 2000;
+unsigned int VAL_CH0  = 2000;
+unsigned int VAL_CH1  = 2000;
+ps2x.read_gamepad(false, vibrate);          //read controller and set large motor to spin at 'vibrate' speed
+if(ps2x.Button(PSB_PAD_UP)) 
+  {         //will be TRUE as long as button is pressed
+   VAL_CH2 = 4000;
+  //Serial.print("Up held this hard: "); Serial.println(ps2x.Analog(PSAB_PAD_UP), DEC); 
+  }
+if(ps2x.Button(PSB_PAD_RIGHT))
+  {
+   VAL_CH3 = 4000;
+   //Serial.print("Right held this hard: "); Serial.println(ps2x.Analog(PSAB_PAD_RIGHT), DEC);
+   }
+if(ps2x.Button(PSB_PAD_LEFT))
+  {
+    VAL_CH3 = 0;
+   //Serial.print("LEFT held this hard: "); Serial.println(ps2x.Analog(PSAB_PAD_LEFT), DEC); 
+  }
+if(ps2x.Button(PSB_PAD_DOWN))
+  {
+   VAL_CH2 = 0;
+   //Serial.print("DOWN held this hard: "); Serial.println(ps2x.Analog(PSAB_PAD_DOWN), DEC); 
+  }   
+  
 new_payload = 'A' + String(VAL_CH0, DEC)+ ';' + 'B' +String(VAL_CH1, DEC) + ';' + 'C' +String(VAL_CH2, DEC) + ';' + 'D' +String(VAL_CH3, DEC) + ';'; 
 Serial.println(new_payload);
 
 //for(int i=0; i<=18; i++){Serial2.write(payload[i]);Serial2.write(payload[i]>>8);} // Send payload to uart
 //for(int i=0; i<=18; i++){Serial.write(payload[i]);Serial.write(payload[i]>>8);}
-delay(100);
-*/
-test_ps2_game_pad();
+delay(1000);
+
+//test_ps2_game_pad();
 }
 
 void setup_ps2_gamepad(){
