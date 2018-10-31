@@ -4,6 +4,7 @@
  * LC12S - 2.4GHZ Setting: NET ID->1234; NODE ID -> 0001; BAUDRATE->9600; Channel-> 100; PW 12dbm
  */
 #include "PS2X_lib.h"
+#include <SoftwareSerial.h>
 #define DEBUG true
 // for PS2 Gamepad
 PS2X ps2x;
@@ -17,6 +18,8 @@ const char CH2 = 13;  // Drone Direction FW/BW        - Joystick right - FW/BW
 const char CH3 = 12;  // Drone Direction Left/Right   - Joystick right - Left/Right  
 const char CH4 = 2;  // Read Internal Battery
 String new_payload = "";
+SoftwareSerial mySerial(3, 2); // RX, TX
+
 void setup(){
  /*if (DEBUG){
     //SerialDebugger.begin(2,9600); //can select uart
@@ -24,6 +27,8 @@ void setup(){
   }
   SerialDebugger.enable(NOTIFICATION);*/
   Serial.begin(9600);
+  mySerial.begin(9600);
+
   setup_ps2_gamepad();
   //SerialDebugger.enable(ERROR);//uncomment if you want to debug ERRORs
 }
@@ -57,10 +62,12 @@ if(ps2x.Button(PSB_PAD_DOWN))
   
 new_payload = 'A' + String(VAL_CH0, DEC)+ ';' + 'B' +String(VAL_CH1, DEC) + ';' + 'C' +String(VAL_CH2, DEC) + ';' + 'D' +String(VAL_CH3, DEC) + ';'; 
 Serial.println(new_payload);
+mySerial.print(new_payload);
+
 
 //for(int i=0; i<=18; i++){Serial2.write(payload[i]);Serial2.write(payload[i]>>8);} // Send payload to uart
 //for(int i=0; i<=18; i++){Serial.write(payload[i]);Serial.write(payload[i]>>8);}
-delay(1000);
+delay(100);
 
 //test_ps2_game_pad();
 }
@@ -69,7 +76,7 @@ void setup_ps2_gamepad(){
 
  //CHANGES for v1.6 HERE!!! **************PAY ATTENTION*************
   
- error = ps2x.config_gamepad(13,11,10,12, true, true);   //setup pins and settings:  GamePad(clock, command, attention, data, Pressures?, Rumble?) check for error 
+ error = ps2x.config_gamepad(13,11,10,12, true, true);   //setup pins and settnings:  GamePad(clock, command, attention, data, Pressures?, Rumble?) check for error 
  if(error == 0){
    Serial.println("Found Controller, configured successful");
    Serial.println("Try out all the buttons, X will vibrate the controller, faster as you press harder;");
