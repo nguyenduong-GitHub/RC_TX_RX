@@ -20,6 +20,11 @@ const char CH4 = 2;  // Read Internal Battery
 String new_payload = "";
 SoftwareSerial mySerial(3, 2); // RX, TX
 
+unsigned int VAL_CH2  = 2000;
+unsigned int VAL_CH3  = 2000;
+unsigned int VAL_CH0  = 2000;
+unsigned int VAL_CH1  = 2000;
+
 void setup(){
  /*if (DEBUG){
     //SerialDebugger.begin(2,9600); //can select uart
@@ -34,10 +39,10 @@ void setup(){
 }
 
 void loop(){
-unsigned int VAL_CH2  = 2000;
-unsigned int VAL_CH3  = 2000;
-unsigned int VAL_CH0  = 2000;
-unsigned int VAL_CH1  = 2000;
+VAL_CH2  = 2000;
+VAL_CH3  = 2000;
+VAL_CH0  = 128; // speed 0-> 255;
+VAL_CH1  = 2000;
 ps2x.read_gamepad(false, vibrate);          //read controller and set large motor to spin at 'vibrate' speed
 if(ps2x.Button(PSB_PAD_UP)) 
   {         //will be TRUE as long as button is pressed
@@ -58,7 +63,8 @@ if(ps2x.Button(PSB_PAD_DOWN))
   {
    VAL_CH2 = 0;
    //Serial.print("DOWN held this hard: "); Serial.println(ps2x.Analog(PSAB_PAD_DOWN), DEC); 
-  }   
+  }
+ update_speed();
   
 new_payload = 'A' + String(VAL_CH0, DEC)+ ';' + 'B' +String(VAL_CH1, DEC) + ';' + 'C' +String(VAL_CH2, DEC) + ';' + 'D' +String(VAL_CH3, DEC) + ';'; 
 Serial.println(new_payload);
@@ -241,3 +247,10 @@ void test_ps2_game_pad(){
  delay(50);
      
 }
+void update_speed()
+{
+    if(ps2x.ButtonPressed(PSB_RED)){ VAL_CH0++; if(VAL_CH0 >= 254){VAL_CH0 = 254;} }  // Circle button ++
+    if(ps2x.ButtonReleased(PSB_PINK)){VAL_CH0--; if(VAL_CH0 <=1){VAL_CH0 = 1;}}  // Square button--          
+   
+}
+
