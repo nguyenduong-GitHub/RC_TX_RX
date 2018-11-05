@@ -1,4 +1,4 @@
-rd#include <SoftwareSerial.h>
+#include <SoftwareSerial.h>
 #define  M_IN4 4
 #define  M_IN3 5
 #define  M_IN2 6
@@ -23,6 +23,10 @@ SoftwareSerial mySerial(10, 11); // RX, TX
 
 void setup()
 {
+ 
+  TCCR2B = TCCR2B & B11111000 | B00000001; // for PWM frequency of 31372.55 Hz
+ pinMode(3,OUTPUT);
+
   pinMode(Front_LED, OUTPUT);
   digitalWrite(Front_LED, LOW);
   pinMode(PWM_BAT, OUTPUT);
@@ -138,6 +142,7 @@ void car_stop()
 }
 void loop() // run over and over
 {
+  analogWrite(3,100);
   if (mySerial.available())
     { rx_char_new = mySerial.read();
       if(rx_char_new == 'A') 
