@@ -142,7 +142,8 @@ void car_stop()
 }
 void loop() // run over and over
 {
-  analogWrite(3,100);
+  analogWrite(3,255);
+  // digitalWrite(3, LOW);
   if (mySerial.available())
     { rx_char_new = mySerial.read();
       if(rx_char_new == 'A') 
